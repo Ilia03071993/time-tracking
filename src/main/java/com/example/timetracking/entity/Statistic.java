@@ -3,8 +3,10 @@ package com.example.timetracking.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.UuidGenerator;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Table(name = "statistics")
@@ -12,14 +14,19 @@ import java.time.LocalDateTime;
 @Setter
 public class Statistic {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @UuidGenerator
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private UUID id;
 
-    private String method;
+    @Column(name = "group_name")
+    private String groupName;
 
-    private Long time;
+    @Column(name = "method_name")
+    private String methodName;
 
-    private String group;
+    @Column(name = "date_time")
+    private LocalDateTime dateTime = LocalDateTime.now();
 
-    private LocalDateTime localDateTime = LocalDateTime.now();
+    @Column(name = "execution_time_ms")
+    private Long executionTime;
 }

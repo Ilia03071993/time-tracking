@@ -1,7 +1,5 @@
 package com.example.timetracking.dto;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-
 import java.time.LocalDateTime;
 
 
@@ -10,6 +8,5 @@ public record StatisticsDto(
         Long executionTime,
         String group,
 
-        LocalDateTime localDateTime
-) {
+        LocalDateTime localDateTime) {
 }

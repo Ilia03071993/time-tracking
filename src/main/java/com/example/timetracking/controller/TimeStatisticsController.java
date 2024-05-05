@@ -1,5 +1,7 @@
 package com.example.timetracking.controller;
 
+import com.example.timetracking.annotation.TrackTime;
+import com.example.timetracking.dto.StatisticSummaryDto;
 import com.example.timetracking.dto.StatisticsDto;
 import com.example.timetracking.service.TimeStatisticsService;
 import lombok.RequiredArgsConstructor;
@@ -16,13 +18,14 @@ import java.util.List;
 public class TimeStatisticsController {
     private final TimeStatisticsService timeStatisticsService;
 
+    @TrackTime("controller")
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<StatisticsDto> getStatistics() {
+    public StatisticSummaryDto getStatistics() {
         return timeStatisticsService.getStatistics();
     }
 
     @GetMapping("/test")
-    public void test () {
+    public void test() {
         timeStatisticsService.test();
     }
 }

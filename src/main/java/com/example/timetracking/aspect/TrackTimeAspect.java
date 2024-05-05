@@ -39,9 +39,9 @@ public class TrackTimeAspect {
         long executionTime = System.currentTimeMillis() - start;
 
         Statistic statistic = new Statistic();
-        statistic.setTime(executionTime);
-        statistic.setMethod(joinPoint.getSignature().toString());
-        statistic.setGroup(group);
+        statistic.setExecutionTime(executionTime);
+        statistic.setMethodName(joinPoint.getSignature().toString());
+        statistic.setGroupName(group);
 
         repository.save(statistic);
         System.out.println(joinPoint.getSignature() + " executed in " + executionTime + "ms");

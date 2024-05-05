@@ -1,0 +1,36 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20240501-1
+      author: author
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: id_pkey
+                  name: id
+                  type: UUID
+              - column:
+                  constraints:
+                    nullable: false
+                  name: group_name
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: method_name
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: date_time
+                  type: TIMESTAMP WITHOUT TIME ZONE
+                  defaultValueComputed: CURRENT_TIMESTAMP
+              - column:
+                  constraints:
+                    nullable: false
+                  name: execution_time_ms
+                  type: BIGINT
+            tableName: statistics
