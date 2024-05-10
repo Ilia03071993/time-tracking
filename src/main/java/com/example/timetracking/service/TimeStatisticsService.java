@@ -57,7 +57,7 @@ public class TimeStatisticsService {
         return statisticSummaryDto;
     }
 
-    private SummaryDto mapSummaryDto(List<Statistic> statList) {
+    public SummaryDto mapSummaryDto(List<Statistic> statList) {
         SummaryDto summaryDto = new SummaryDto();
         summaryDto.setAmount(statList.size());
         summaryDto.setMax(statList.stream().map(t -> t.getExecutionTime()).max(Long::compare).get());
