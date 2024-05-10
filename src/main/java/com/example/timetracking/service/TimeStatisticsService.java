@@ -2,11 +2,12 @@ package com.example.timetracking.service;
 
 import com.example.timetracking.annotation.TrackTime;
 import com.example.timetracking.dto.StatisticSummaryDto;
-import com.example.timetracking.dto.StatisticsDto;
 import com.example.timetracking.dto.SummaryDto;
 import com.example.timetracking.entity.Statistic;
 import com.example.timetracking.repository.StatisticsRepository;
+import com.example.timetracking.service.maper.StaticsMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class TimeStatisticsService {
     private final StatisticsRepository statisticsRepository;
+    private final StaticsMapper mapper;
 
     public StatisticSummaryDto getStatistics() {
 //        return statisticsRepository
@@ -47,7 +49,7 @@ public class TimeStatisticsService {
         statisticSummaryDto.setSummary(summaryDtoMap);
         statisticSummaryDto.setTopSlow(statistics.stream()
                 .sorted(Comparator.comparing(Statistic::getExecutionTime).reversed())
-                .map(this::mapStatisticDto)
+                .map(mapper::toStaticDto)
                 .limit(10)
                 .toList()
         );
@@ -67,22 +69,26 @@ public class TimeStatisticsService {
         return summaryDto;
     }
 
-    private StatisticsDto mapStatisticDto(Statistic statistic) {
-        return new StatisticsDto(statistic.getMethodName(),
-                statistic.getExecutionTime(),
-                statistic.getGroupName(),
-                statistic.getDateTime());
-    }
-
-    @TrackTime("service")
+    @SneakyThrows
+    @TrackTime
     public void test() {
-        try {
-            TimeUnit.SECONDS.sleep(2);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        log.info("start");
+
+        TimeUnit.SECONDS.sleep(2);
+
+        Thread thread = new Thread(this::testThread);
+        thread.start();
 
         log.info("Test ok");
+    }
+
+    @SneakyThrows
+    private void testThread() {
+        log.info("start");
+
+        TimeUnit.SECONDS.sleep(2);
+
+        log.info("end");
     }
 
     public void saveExecutionTime(String methodName, long executionTime) {
